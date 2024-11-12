@@ -1,0 +1,8 @@
+
+function Niveles() {
+  return (
+    <div>Niveles</div>
+  )
+}
+
+export default Niveles
