@@ -1,3 +1,7 @@
+import Analisis from './assets/analisis.webp';
+import Desarrollo from './assets/desarrollo.webp';
+import Programacion from './assets/programacion.png';
+
 function Metodos() {
   return (
     <div className="p-8">
@@ -6,32 +10,32 @@ function Metodos() {
         <h1 className="text-2xl font-bold text-green-500 ml-2">Métodos</h1>
       </div>
 
-      <div className="flex justify-around mt-8">
-        <div className="text-center">
+      <div className="flex justify-center items-center flex-col mt-8 space-y-8">
+        <div className="w-full text-center">
           <img
-            src="url_de_la_imagen_frontend"
+            src={Programacion}
             alt="Frontend"
-            className="w-64 h-48 object-cover mb-4"
+            className="w-full h-48 object-cover"
           />
-          <h1 className="text-lg font-bold text-blue-400">FRONTEND</h1>
+          <h1 className="text-lg font-bold p-2 bg-gray-300 text-blue-400 w-full">FRONTEND</h1>
         </div>
 
-        <div className="text-center">
+        <div className="w-full text-center">
           <img
-            src="url_de_la_imagen_backend"
+            src={Analisis}
             alt="Backend"
-            className="w-64 h-48 object-cover mb-4"
+            className="w-full h-48 object-cover"
           />
-          <h1 className="text-lg font-bold text-blue-400">BACKEND</h1>
+          <h1 className="text-lg font-bold p-2 bg-gray-300 text-blue-400 w-full">BACKEND</h1>
         </div>
 
-        <div className="text-center">
+        <div className="w-full text-center">
           <img
-            src="url_de_la_imagen_fullstack"
+            src={Desarrollo}
             alt="Full Stack"
-            className="w-64 h-48 object-cover mb-4"
+            className="w-full h-48 object-cover"
           />
-          <h1 className="text-lg font-bold text-blue-400">FULL STACK</h1>
+          <h1 className="text-lg font-bold p-2 bg-gray-300 text-blue-400 w-full">FULL STACK</h1>
         </div>
       </div>
     </div>
