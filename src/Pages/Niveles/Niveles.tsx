@@ -14,7 +14,7 @@ function Niveles() {
             alt="Básico"
             className="w-full h-48 object-cover"
           />
-          <h1 className="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold">
+          <h1 className="absolute inset-0 flex items-center justify-start ml-10 text-white text-7xl font-bold">
             BÁSICO
           </h1>
         </div>
@@ -25,7 +25,7 @@ function Niveles() {
             alt="Intermedio"
             className="w-full h-48 object-cover"
           />
-          <h1 className="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold">
+          <h1 className="absolute inset-0 flex items-center justify-start ml-10 text-white text-7xl font-bold">
             INTERMEDIO
           </h1>
         </div>
@@ -36,7 +36,7 @@ function Niveles() {
             alt="Avanzado"
             className="w-full h-48 object-cover"
           />
-          <h1 className="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold">
+          <h1 className="absolute inset-0 flex items-center justify-start ml-10 text-white text-7xl font-bold">
             AVANZADO
           </h1>
         </div>
