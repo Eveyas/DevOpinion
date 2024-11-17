@@ -6,6 +6,7 @@ import Registro from "./Pages/Registro/Registro";
 import Login from "./Pages/Login/Login";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import Nosotros from "./Pages/Nosotros/Nosotros";
 const App = () => {
   return (
     <Router>
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/Login" element={<Login />} />
         <Route path="/Header" element={<Header />} />
         <Route path="/Footer" element={<Footer />} />
+        <Route path="/Nosotros" element={<Nosotros />} />
       </Routes>
     </Router>
   );
