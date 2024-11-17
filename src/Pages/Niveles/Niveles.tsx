@@ -1,5 +1,4 @@
 import Programacion from "./assets/img_Programacion.jpg";
-
 function Niveles() {
   return (
     <div className="p-8">
