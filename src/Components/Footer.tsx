@@ -3,7 +3,7 @@ import { FaFacebookF, FaChrome, FaYoutube } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-100 p-6">
+    <footer className="bg-gray-300 p-6">
       <div className="flex justify-center space-x-6 mb-4">
         <a href="https://facebook.com" className="text-blue-600">
           <FaFacebookF size={24} />

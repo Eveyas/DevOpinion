@@ -6,6 +6,8 @@ import Registro from "./Pages/Registro/Registro";
 import Login from "./Pages/Login/Login";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import Nosotros from "./Pages/Nosotros/Nosotros";
+import Tipos_Desarrollo from "./Pages/Tipos_Desarrollo/Tipos_Desarrollo";
 const App = () => {
   return (
     <Router>
@@ -17,6 +19,8 @@ const App = () => {
         <Route path="/Login" element={<Login />} />
         <Route path="/Header" element={<Header />} />
         <Route path="/Footer" element={<Footer />} />
+        <Route path="/Nosotros" element={<Nosotros />} />
+        <Route path="/Tipos_Desarrollo" element={<Tipos_Desarrollo />} />
       </Routes>
     </Router>
   );
