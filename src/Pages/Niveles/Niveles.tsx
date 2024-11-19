@@ -1,10 +1,12 @@
 import Programacion from "./assets/img_Programacion.jpg";
 import Header from "../../Components/Header";
-import Footer from "../../Components/Footer"; 
+import Footer from "../../Components/Footer";
+
 function Niveles() {
   return (
-    <div className="p-8">
-      <Header></Header>
+    <div className="p-8"> 
+      <Header />
+      
       <div className="flex items-center bg-gray-300 p-4">
         <h1 className="text-2xl font-bold">Nuestros</h1>
         <h1 className="text-2xl font-bold text-green-500 ml-2">Niveles</h1>
@@ -44,7 +46,8 @@ function Niveles() {
           </h1>
         </div>
       </div>
-      <Footer></Footer>
+
+      <Footer />
     </div>
   );
 }
