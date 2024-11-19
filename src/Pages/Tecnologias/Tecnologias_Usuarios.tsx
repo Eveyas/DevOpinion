@@ -69,7 +69,7 @@ function Tecnologias_Usuarios() {
     <div>
       <Header />
       <div className="w-11/12 mx-auto font-sans p-4">
-
+        
         <div className="my-4 text-center">
           <input
             type="text"
@@ -80,7 +80,7 @@ function Tecnologias_Usuarios() {
           />
         </div>
 
-        {/* Botones de vista */}
+      
         <div className="flex justify-center gap-4 my-4">
           <button
             onClick={() => setVistaActiva("tecnologias")}
