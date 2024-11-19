@@ -13,8 +13,8 @@ const Header: React.FC = () => {
         <Link to="/Nosotros" className="text-black hover:underline">Nosotros</Link>
         <Link to="/Metodos" className="text-black hover:underline">Métodos</Link>
         <Link to="/Niveles" className="text-black hover:underline">Niveles</Link>
-        <a href="#iniciar-sesion" className="text-black hover:underline">Iniciar sesión</a>
-        <a href="#registrarse" className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">Registrarse</a>
+        <a href="Login" className="text-black hover:underline">Iniciar sesión</a>
+        <a href="Registro" className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">Registrarse</a>
       </nav>
     </header>
   );
