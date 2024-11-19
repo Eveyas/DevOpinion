@@ -57,14 +57,14 @@ function PerfilUsuario() {
             <p className="text-gray-700 flex-grow text-sm">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit...
             </p>
-            <button className="text-blue-500 font-bold ml-4"></button>
+            <button className="text-blue-500 font-bold ml-4">ir</button>
           </div>
           <div className="flex items-center my-4 p-4 bg-white rounded-lg">
             <div className="bg-blue-200 w-40 h-24 mr-4"></div>
             <p className="text-gray-700 flex-grow text-sm">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit...
             </p>
-            <button className="text-blue-500 font-bold ml-4"></button>
+            <button className="text-blue-500 font-bold ml-4">Ver mas</button>
           </div>
         </div>
       </div>

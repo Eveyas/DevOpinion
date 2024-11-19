@@ -17,9 +17,6 @@ function Nosotros() {
             <span className="text-green-400">Dev</span>Opinion
           </h1>
           <div className="mt-4 md:absolute md:bottom-5 mb-5 md:left-10">
-            <button className="bg-blue-600 rounded-full text-white py-2 px-4 hover:bg-blue-500">
-              Iniciar sesión
-            </button>
           </div>
         </div>
       </div>
