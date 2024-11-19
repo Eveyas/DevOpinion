@@ -1,9 +1,12 @@
+import Perfil from './assets/Perfil.png'
+import Header from '../../Components/Header';
 function PerfilUsuario() {
   return (
     <div className="p-8 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
+      <Header></Header>
       <div className="flex items-start mb-6">
         <img
-          src="https://via.placeholder.com/120"
+          src={Perfil}
           alt="Usuario"
           className="rounded-full border-4 border-green-400 w-28 h-28 mr-4"
         />
@@ -85,14 +88,24 @@ function PerfilUsuario() {
         <div className="flex items-center my-4 p-4 bg-white rounded-lg">
           <div className="bg-green-200  w-40 h-24 mr-4"></div>
           <p className="text-gray-700 flex-grow text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <button className="text-green-500 font-bold ml-4">Ir</button>
         </div>
         <div className="flex items-center my-4 p-4 bg-white rounded-lg">
           <div className="bg-green-200 w-40 h-24 mr-4"></div>
           <p className="text-gray-700 flex-grow text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <button className="text-green-500 font-bold ml-4">Ir</button>
         </div>
@@ -103,14 +116,24 @@ function PerfilUsuario() {
         <div className="flex items-center my-4 p-4 bg-white rounded-lg">
           <div className="bg-blue-200  w-40 h-24 mr-4"></div>
           <p className="text-gray-700 flex-grow text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <button className="text-blue-500 font-bold ml-4"></button>
         </div>
         <div className="flex items-center my-4 p-4 bg-white rounded-lg">
           <div className="bg-blue-200  w-40 h-24 mr-4"></div>
           <p className="text-gray-700 flex-grow text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <button className="text-blue-500 font-bold ml-4"></button>
         </div>
