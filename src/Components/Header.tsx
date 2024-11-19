@@ -8,8 +8,9 @@ const Header: React.FC = () => {
     <header className="flex items-center justify-between p-4 bg-white shadow-md">
       {/* Logo */}
       <div className="flex items-center">
-        <img src="/path/to/logo.png" alt="Logo" className="w-10 h-10" />
-        <span className="ml-2 text-xl font-bold">Mi Proyecto</span>
+        <img src="./src/assets/Imagenes/logo_white.png" alt="Logo" className="w-10 h-10" />
+        <span className="ml-2 text-xl font-bold text-blue-400">Dev</span><span className="text-xl font-bold text-green-400">Opinion</span>
+
       </div>
 
       {/* Hamburguesa */}

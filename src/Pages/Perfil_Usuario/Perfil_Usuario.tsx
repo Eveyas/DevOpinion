@@ -1,5 +1,6 @@
 import Perfil from './assets/Perfil.png'
 import Header from '../../Components/Header';
+
 function PerfilUsuario() {
   return (
     <div className="p-8 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
@@ -86,7 +87,7 @@ function PerfilUsuario() {
       <div className="mb-8">
         <h2 className="text-lg font-bold">Comentarios</h2>
         <div className="flex items-center my-4 p-4 bg-white rounded-lg">
-          <div className="bg-green-200  w-40 h-24 mr-4"></div>
+          <div className="bg-green-200 w-96 h-24 mr-4"></div>
           <p className="text-gray-700 flex-grow text-sm">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
@@ -98,7 +99,31 @@ function PerfilUsuario() {
           <button className="text-green-500 font-bold ml-4">Ir</button>
         </div>
         <div className="flex items-center my-4 p-4 bg-white rounded-lg">
-          <div className="bg-green-200 w-40 h-24 mr-4"></div>
+          <div className="bg-green-200 w-96 h-24 mr-4"></div>
+          <p className="text-gray-700 flex-grow text-sm">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+          <button className="text-green-500 font-bold ml-4">Ir</button>
+        </div>
+        <div className="flex items-center my-4 p-4 bg-white rounded-lg">
+          <div className="bg-green-200 w-96 h-24 mr-4"></div>
+          <p className="text-gray-700 flex-grow text-sm">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+          ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+          <button className="text-green-500 font-bold ml-4">Ir</button>
+        </div>
+        <div className="flex items-center my-4 p-4 bg-white rounded-lg">
+          <div className="bg-green-200 w-96 h-24 mr-4"></div>
           <p className="text-gray-700 flex-grow text-sm">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
@@ -111,7 +136,7 @@ function PerfilUsuario() {
         </div>
       </div>
 
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h2 className="text-lg font-bold">Recomendaciones</h2>
         <div className="flex items-center my-4 p-4 bg-white rounded-lg">
           <div className="bg-blue-200  w-40 h-24 mr-4"></div>
@@ -137,7 +162,7 @@ function PerfilUsuario() {
           </p>
           <button className="text-blue-500 font-bold ml-4"></button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
