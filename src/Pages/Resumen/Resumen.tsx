@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
-import perfil from '../Perfil_Usuario/assets/Perfil.png'; // Asegúrate de que esta ruta es correcta
+import perfil from '../Perfil_Usuario/assets/Perfil.png';
 
 const Resumen = () => {
   const [selectedTechnology, setSelectedTechnology] = useState('Backend');

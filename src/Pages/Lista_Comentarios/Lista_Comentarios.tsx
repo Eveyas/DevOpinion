@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaEdit, FaTrash, FaHome, FaUsers, FaCommentDots } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaUsers, FaCommentDots } from 'react-icons/fa';
+import { CiLogout } from "react-icons/ci";
 import Footer from '../../Components/Footer';
 
 interface Comment {
@@ -46,16 +47,12 @@ const CommentList: React.FC = () => {
         <aside className="w-64 bg-white shadow-lg">
           <div className="p-6">
             <div className="flex items-center mb-8">
-              <FaHome className="text-blue-500 mr-2" />
-              <h1 className="text-3xl font-bold text-blue-500">DevOpinion</h1>
+              <img src="./src/assets/Imagenes/logo_white.png" alt="Logo" className="w-10 h-10" />
+              <span className="ml-2 text-xl font-bold text-blue-400">Dev</span><span className="text-xl font-bold text-green-400">Opinion</span>
             </div>
             <nav>
               <ul>
                 <li className="mb-4">
-                  <a href="Nosotros" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded">
-                    <FaHome className="mr-2" />
-                    <span>Inicio</span>
-                  </a>
                 </li>
                 <li className="mb-4">
                   <a href="Lista_Usuario" className="flex items-center p-2 text-gray-600 hover:bg-gray-100 rounded">
@@ -68,6 +65,9 @@ const CommentList: React.FC = () => {
                     <FaCommentDots className="mr-2" />
                     <span>Comentarios</span>
                   </a>
+                  <a href="Login" className="flex items-center p-2 text-blue-500 hover:bg-green-100 rounded">
+                     <CiLogout className="mr-2" /> Cerrar sesión
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -78,13 +78,12 @@ const CommentList: React.FC = () => {
             <div className="bg-white p-6 shadow-lg rounded-lg mb-6">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <h1 className="text-3xl font-bold">DevOpinion</h1>
                 </div>
                 <div className="flex items-center">
                   <img src="https://via.placeholder.com/50" alt="Perfil" className="rounded-full w-10 h-10 mr-2" />
                   <div>
                     <p className="font-semibold">Evelin Yasmin</p>
-                    <p className="text-sm text-gray-600">Administrador</p>
+                    <p className="text-sm text-gray-600">Moderador</p>
                   </div>
                 </div>
               </div>

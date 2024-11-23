@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaEdit, FaTrash, FaHome, FaUser, FaComment } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaUser, FaComment } from 'react-icons/fa';
+import { CiLogout } from "react-icons/ci";
 import Footer from '../../Components/Footer';
 
 interface User {
@@ -71,18 +72,19 @@ const UserList: React.FC = () => {
         {/* Sidebar */}
         <aside className="w-64 bg-lightblue-200 p-4 shadow-lg">
         <div className="flex items-center mb-8">
-              <FaHome className="text-blue-500 mr-2" />
-              <h1 className="text-3xl font-bold text-blue-500">DevOpinion</h1>
+              <img src="./src/assets/Imagenes/logo_white.png" alt="Logo" className="w-10 h-10" />
+              <span className="ml-2 text-xl font-bold text-blue-400">Dev</span><span className="text-xl font-bold text-green-400">Opinion</span>
             </div>
           <nav className="space-y-4">
-            <a href="#" className="flex items-center p-2 text-blue-500 hover:bg-green-100 rounded">
-              <FaHome className="mr-2" /> Inicio
-            </a>
+            
             <a href="#" className="flex items-center p-2 bg-green-500 text-white rounded">
               <FaUser className="mr-2" /> Usuarios
             </a>
             <a href="Lista_Comentarios" className="flex items-center p-2 text-blue-500 hover:bg-green-100 rounded">
               <FaComment className="mr-2" /> Comentarios
+            </a>
+            <a href="Login" className="flex items-center p-2 text-blue-500 hover:bg-green-100 rounded">
+              <CiLogout className="mr-2" /> Cerrar sesión
             </a>
           </nav>
         </aside>

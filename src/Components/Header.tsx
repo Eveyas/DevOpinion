@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import logo from './assets/logo.png';
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
@@ -11,7 +10,6 @@ const Header: React.FC = () => {
       <div className="flex items-center">
         <img src="./src/assets/Imagenes/logo_white.png" alt="Logo" className="w-10 h-10" />
         <span className="ml-2 text-xl font-bold text-blue-400">Dev</span><span className="text-xl font-bold text-green-400">Opinion</span>
-
       </div>
 
       {/* Hamburguesa y navegación */}
