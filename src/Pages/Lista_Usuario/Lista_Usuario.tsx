@@ -9,11 +9,12 @@ interface User {
   nombre: string;
   correo: string;
   contrasena: string;
+  rol: string;
 }
 
 const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [newUser, setNewUser] = useState({ nombre: '', correo: '', contrasena: '' });
+  const [newUser, setNewUser] = useState({ nombre: '', correo: '', contrasena: '', rol: '' });
   const [editingUser, setEditingUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const UserList: React.FC = () => {
       axios.post('http://localhost:3000/api/users', newUser)
         .then(({ data }) => {
           setUsers([...users, data]);
-          setNewUser({ nombre: '', correo: '', contrasena: '' });
+          setNewUser({ nombre: '', correo: '', contrasena: '', rol: ''});
         })
         .catch(error => {
           console.error('There was an error creating the user!', error);
@@ -112,6 +113,7 @@ const UserList: React.FC = () => {
                   <th className="py-3 px-4 border-b">Correo</th>
                   <th className="py-3 px-4 border-b">Contraseña</th>
                   <th className="py-3 px-4 border-b">Acciones</th>
+                  <th className="py-3 px-4 border-b">Rol</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,6 +123,7 @@ const UserList: React.FC = () => {
                     <td className="py-2 px-4 border-b">{user.nombre}</td>
                     <td className="py-2 px-4 border-b">{user.correo}</td>
                     <td className="py-2 px-4 border-b">{user.contrasena}</td>
+                    <td className="py-2 px-4 border-b">{user.rol}</td>
                     <td className="py-2 px-4 border-b">
                       <button onClick={() => handleEdit(user)} className="text-blue-500 hover:text-blue-700 mr-2">
                         Editar<FaEdit />
@@ -167,7 +170,25 @@ const UserList: React.FC = () => {
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   />
                 </div>
-                <button type="button" onClick={handleSave} className="bg-green-500 text-white px-4 py-2 rounded">
+                                <div className="mb-4">
+                  <label htmlFor="rol" className="block text-sm font-medium text-gray-700">Rol</label>
+                  <select
+                    id="rol"
+                    value={editingUser ? editingUser.rol : newUser.rol}
+                    onChange={(e) => editingUser
+                      ? setEditingUser({ ...editingUser, rol: e.target.value })
+                      : setNewUser({ ...newUser, rol: e.target.value })
+                    }
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                  >
+                    <option value="" disabled>Escoger un rol</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Moderador">Moderador</option>
+                  </select>
+                </div>
+
+
+                <button type="button" onClick={handleSave} disabled={!newUser.rol && !editingUser?.rol} className="bg-green-500 text-white px-4 py-2 rounded">
                   {editingUser ? 'Actualizar' : 'Guardar'}
                 </button>
               </form>
