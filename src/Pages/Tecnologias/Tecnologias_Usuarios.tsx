@@ -54,7 +54,6 @@ function Tecnologias_Usuarios() {
   const [vistaActiva, setVistaActiva] = useState("tecnologias");
   const [busqueda, setBusqueda] = useState("");
 
-
   const tecnologiasFiltradas = tecnologias.filter((tecnologia) =>
     tecnologia.titulo.toLowerCase().includes(busqueda.toLowerCase())
   );
@@ -69,22 +68,22 @@ function Tecnologias_Usuarios() {
     <div>
       <Header />
       <div className="w-11/12 mx-auto font-sans p-4">
-        
+        {/* Barra de búsqueda */}
         <div className="my-4 text-center">
           <input
             type="text"
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar por tecnología o usuario..."
-            className="w-4/5 px-4 py-4 bg-gray-200 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full sm:w-4/5 px-4 py-2 bg-gray-200 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
-      
-        <div className="flex justify-center gap-4 my-4">
+        {/* Botones de selección */}
+        <div className="flex justify-center gap-2 sm:gap-4 my-4">
           <button
             onClick={() => setVistaActiva("tecnologias")}
-            className={`px-6 py-2 rounded-full font-semibold ${
+            className={`px-4 sm:px-6 py-2 rounded-full font-semibold ${
               vistaActiva === "tecnologias"
                 ? "bg-blue-200 text-blue-800"
                 : "bg-gray-200 text-gray-800"
@@ -94,7 +93,7 @@ function Tecnologias_Usuarios() {
           </button>
           <button
             onClick={() => setVistaActiva("usuarios")}
-            className={`px-6 py-2 rounded-full font-semibold ${
+            className={`px-4 sm:px-6 py-2 rounded-full font-semibold ${
               vistaActiva === "usuarios"
                 ? "bg-green-200 text-green-800"
                 : "bg-gray-200 text-gray-800"
@@ -115,15 +114,15 @@ function Tecnologias_Usuarios() {
               return (
                 <div
                   key={tecnologia.id}
-                  className="flex gap-4 p-4 border border-gray-300 rounded-lg bg-gray-50"
+                  className="flex flex-col sm:flex-row gap-4 p-4 border border-gray-300 rounded-lg bg-gray-50"
                 >
                   <img
                     src={Tecnologia}
                     alt="Código"
-                    className="w-44 h-44 object-cover rounded-lg"
+                    className="w-full sm:w-44 h-44 object-cover rounded-lg"
                   />
-                  <div className="flex-1 w-full h-44 object-cover bg-blue-200 rounded-lg p-4">
-                    <h3 className="text-xl font-semibold text-gray-800">
+                  <div className="flex-1 bg-blue-200 rounded-lg p-4">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
                       {tecnologia.titulo}
                     </h3>
                     <p className="text-sm text-gray-600 my-2">
@@ -151,15 +150,15 @@ function Tecnologias_Usuarios() {
               return (
                 <div
                   key={usuario.id}
-                  className="flex gap-4 p-4 border border-gray-300 rounded-lg bg-gray-50"
+                  className="flex flex-col sm:flex-row gap-4 p-4 border border-gray-300 rounded-lg bg-gray-50"
                 >
                   <img
                     src={Usuarios}
                     alt="Perfil de usuario"
-                    className="w-44 h-44 object-cover rounded-lg"
+                    className="w-full sm:w-44 h-44 object-cover rounded-lg"
                   />
-                  <div className="flex-1 w-full h-44 object-cover bg-green-200 rounded-lg p-4">
-                    <h3 className="text-xl font-semibold text-green-800">
+                  <div className="flex-1 bg-green-200 rounded-lg p-4">
+                    <h3 className="text-lg sm:text-xl font-semibold text-green-800">
                       {usuario.nombre}
                     </h3>
                     <p className="text-sm text-gray-600 my-2">
