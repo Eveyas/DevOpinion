@@ -10,6 +10,7 @@ import UserList from "./Pages/Lista_Usuario/Lista_Usuario";  //ruta de administr
 import CommentList from "./Pages/Lista_Comentarios/Lista_Comentarios";  //ruta de moderador
 import Header from "./Components/Header";  
 import Footer from "./Components/Footer";
+import Home from "./Pages/Home/Home";
 
 // import { AuthProvider } from './Route/AuthContext';
 // import ProtectedRoute from './Route/ProtectedRoute';
@@ -23,7 +24,7 @@ const App = () => {
         {/* <Route path="/Metodos" element={<Metodos />} />
         <Route path="/Niveles" element={<Niveles />} /> */}
 
-
+<Route path="/" element={<Home />} />
         <Route path="/Perfil_Usuario" element={<PerfilUsuario />} />
         <Route path="/Registro" element={<Registro />} />
         <Route path="/Login" element={<Login />} />
