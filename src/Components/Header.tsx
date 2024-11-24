@@ -7,11 +7,11 @@ const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between p-4 bg-white shadow-md">
       <div className="flex items-center">
-        <img
+      <Link to ={'/'}>  <img
           src="./src/assets/Imagenes/logo_white.png"
           alt="Logo"
           className="w-10 h-10"
-        />
+        /></Link>
         <span className="ml-2 text-xl font-bold text-blue-400">Dev</span>
         <span className="text-xl font-bold text-green-400">Opinion</span>
       </div>
