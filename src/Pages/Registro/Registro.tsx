@@ -1,7 +1,7 @@
-import chica from './assets/chica.jpg';
-import google from './assets/google.png';
-import facebu from './assets/facebu.jpg';
 import React, { useState } from 'react';
+import chica from './assets/chica.jpg';
+// import google from './assets/google.png';
+// import facebu from './assets/facebu.jpg';
 
 function Registro() { 
 
@@ -42,8 +42,8 @@ function Registro() {
         </div>
 
         <div className="w-full md:w-1/2 p-8">
-          <h2 className="text-center text-2xl font-semibold mb-4">Registrarse con</h2>
-          <div className="flex justify-center gap-4 mb-4">
+          <h2 className="text-center text-2xl font-semibold mb-4">Registrarse</h2>
+          {/* <div className="flex justify-center gap-4 mb-4">
             <button className="py-2 px-4 flex items-center justify-center bg-white border border-gray-300 rounded-md shadow-sm hover:shadow-lg transition">
               <img src={google} alt="google" className="w-10 h-10" />
               Continue with Google
@@ -53,7 +53,7 @@ function Registro() {
               Continue with Facebook
             </button>
           </div>
-          <p className="text-center text-gray-500 mb-4">or</p>
+          <p className="text-center text-gray-500 mb-4">or</p> */}
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>

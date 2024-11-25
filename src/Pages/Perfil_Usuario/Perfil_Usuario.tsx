@@ -1,8 +1,16 @@
 import Perfil from "./assets/Perfil.png";
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
+import { useState } from "react";
 
 function PerfilUsuario() {
+  const [descripcion, setDescripcion] = useState(''); // Estado para la descripción
+
+  // Función para manejar el cambio en la descripción
+  const handleDescripcionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescripcion(e.target.value);
+  };
+
   return (
     <div>
       <Header />
@@ -27,10 +35,13 @@ function PerfilUsuario() {
         {/* Descripción */}
         <div className="mb-8">
           <h2 className="text-lg font-bold">Descripción</h2>
-          <p className="text-gray-700 text-sm mt-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+          <textarea
+            value={descripcion}
+            onChange={handleDescripcionChange}
+            className="w-full p-2 border border-gray-300 rounded-lg resize-none"
+            placeholder="Escribe algo sobre ti..."
+            style={{ minHeight: '100px' }}
+          />
         </div>
 
         {/* Comentarios */}
@@ -45,31 +56,10 @@ function PerfilUsuario() {
               <p className="text-gray-700 flex-grow text-sm text-center sm:text-left">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit...
               </p>
-              <button className="text-green-500 font-bold mt-2 sm:mt-0 sm:ml-4">
-                Ir
-              </button>
             </div>
           ))}
         </div>
 
-        {/* Recomendaciones */}
-        <div className="mb-8">
-          <h2 className="text-lg font-bold">Recomendaciones</h2>
-          {[1, 2].map((recomendacion) => (
-            <div
-              key={recomendacion}
-              className="flex flex-col sm:flex-row items-center sm:items-start my-4 p-4 bg-gray-50 rounded-lg"
-            >
-              <div className="bg-blue-200 w-full sm:w-40 h-24 sm:mr-4 mb-2 sm:mb-0"></div>
-              <p className="text-gray-700 flex-grow text-sm text-center sm:text-left">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-              </p>
-              <button className="text-blue-500 font-bold mt-2 sm:mt-0 sm:ml-4">
-                Ver más
-              </button>
-            </div>
-          ))}
-        </div>
       </div>
       <Footer />
     </div>

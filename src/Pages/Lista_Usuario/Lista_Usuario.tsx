@@ -46,7 +46,7 @@ const UserList: React.FC = () => {
   const handleSave = () => {
     if (editingUser) {
       // Update user in backend
-      axios.put(`http://localhost:3000/api/users/${editingUser.id}`, editingUser)
+      axios.put(`http://localhost:5259/api/CRUD/${editingUser.id}`, editingUser)
         .then(() => {
           setUsers(users.map(user => (user.id === editingUser.id ? editingUser : user)));
           setEditingUser(null);

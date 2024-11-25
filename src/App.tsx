@@ -5,7 +5,7 @@ import Login from "./Pages/Login/Login";  //ruta pública
 import Nosotros from "./Pages/Nosotros/Nosotros";  //ruta pública
 import Tipos_Desarrollo from "./Pages/Tipos_Desarrollo/Tipos_Desarrollo";  //ruta de usuario e invitado
 import Tecnologias_Usuarios from "./Pages/Tecnologias/Tecnologias_Usuarios";  //ruta de usuario
-import Resumen from "./Pages/Resumen/Resumen";  //ruta de usuario
+import Comentar from "./Pages/Comentar/Comentar";
 import UserList from "./Pages/Lista_Usuario/Lista_Usuario";  //ruta de administrador
 import CommentList from "./Pages/Lista_Comentarios/Lista_Comentarios";  //ruta de moderador
 import Header from "./Components/Header";  
@@ -31,7 +31,7 @@ const App = () => {
         <Route path="/Nosotros" element={<Nosotros />} />
         <Route path="/Tipos_Desarrollo" element={<Tipos_Desarrollo />} />
         <Route path="/Tecnologias_Usuarios" element={<Tecnologias_Usuarios />} />
-        <Route path="/Resumen" element={<Resumen />} />
+        <Route path="/Comentar" element={<Comentar />} />
         <Route path="/Lista_Usuario" element={<UserList/>} />
         <Route path="/Lista_Comentarios" element={<CommentList/>} />  
         <Route path="/Header" element={<Header />} />

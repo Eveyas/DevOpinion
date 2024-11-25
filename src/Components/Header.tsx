@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             Desarrollo
           </Link>
           <Link
-            to="/Resumen"
+            to="/Comentar"
             className="block px-4 py-2 text-black hover:underline"
           >
             Comentar
@@ -101,7 +101,7 @@ const Header: React.FC = () => {
           Desarrollo
         </Link>
         <Link
-          to="/Resumen"
+          to="/Comentar"
           className="block px-4 py-2 text-black hover:underline"
         >
           Comentar

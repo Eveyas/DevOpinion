@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
 import "animate.css";
+import Comunidad from "./Comunidad.jpg";
+import Innovación from "./Innovación.jpg";
+import Crecimiento from "./Crecimiento.jpg";
 
 interface Question {
   category: string;
@@ -112,7 +115,7 @@ function Home() {
               showWelcome ? "opacity-100" : "opacity-0"
             }`}
           >
-            Bienvenido a <span className="text-green-500">DevOpinion</span>
+            Bienvenido a <span className="text-blue-500">Dev</span><span className="text-green-600">Opinion</span>
           </h1>
           <p
             className={`text-white text-lg mt-4 max-w-2xl transition-opacity duration-1000 ${
@@ -132,14 +135,19 @@ function Home() {
 
       <div className="py-16 px-5 md:px-16 bg-white">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-          ¿Por qué elegir <span className="text-green-500">DevOpinion</span>?
+          ¿Qué nos hace <span className="text-green-400">realmente </span><span className="text-blue-400">únicos</span>?
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-gray-100 p-6 rounded-lg shadow-lg hover:scale-105 transform transition-all duration-300">
             <div className="text-center mb-4">
-              <div className="bg-green-500 w-16 h-16 mx-auto rounded-full flex items-center justify-center">
-                <i className="fas fa-users text-white text-2xl"></i>
+            <i className="fas fa-lightbulb text-white text-2xl"></i>
+              <div className="bg-green-500 w-16 h-16 mx-auto rounded-full flex items-center justify-center overflow-hidden">
+              <img
+              src={Comunidad}
+              alt="Imagen 1"
+              className="w-full h-40 md:h-48 object-cover rounded shadow-lg"
+            />
               </div>
             </div>
             <h3 className="text-xl font-bold text-center mb-2">Comunidad</h3>
@@ -150,8 +158,13 @@ function Home() {
           </div>
           <div className="bg-gray-100 p-6 rounded-lg shadow-lg hover:scale-105 transform transition-all duration-300">
             <div className="text-center mb-4">
-              <div className="bg-blue-500 w-16 h-16 mx-auto rounded-full flex items-center justify-center">
-                <i className="fas fa-lightbulb text-white text-2xl"></i>
+              <div className="bg-blue-500 w-16 h-16 mx-auto rounded-full flex items-center justify-center overflow-hidden">
+              <i className="fas fa-lightbulb text-white text-2xl"></i>
+              <img
+              src={Innovación}
+              alt="Imagen 2"
+              className="w-full h-40 md:h-48 object-cover rounded shadow-lg"
+            />
               </div>
             </div>
             <h3 className="text-xl font-bold text-center mb-2">Innovación</h3>
@@ -162,8 +175,13 @@ function Home() {
           </div>
           <div className="bg-gray-100 p-6 rounded-lg shadow-lg hover:scale-105 transform transition-all duration-300">
             <div className="text-center mb-4">
-              <div className="bg-blue-400 w-16 h-16 mx-auto rounded-full flex items-center justify-center">
+              <div className="bg-blue-400 w-16 h-16 mx-auto rounded-full flex items-center justify-center overflow-hidden">
                 <i className="fas fa-rocket text-white text-2xl"></i>
+                <img
+              src={Crecimiento}
+              alt="Imagen 2"
+              className="w-full h-40 md:h-48 object-cover rounded shadow-lg"
+            />
               </div>
             </div>
             <h3 className="text-xl font-bold text-center mb-2">Crecimiento</h3>
@@ -219,7 +237,7 @@ function Home() {
         <p className="text-lg mb-8">
           Únete a nuestra plataforma y forma parte del cambio.
         </p>
-        <Link to={"/Tipos_Desarrollo"}>
+        <Link to={"/Registro"}>
           {" "}
           <button className="bg-white text-blue-600 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition">
             ¡Comienza ahora!
