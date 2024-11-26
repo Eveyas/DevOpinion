@@ -16,7 +16,7 @@ const CommentList: React.FC = () => {
 
   useEffect(() => {
     // Fetch comments from backend
-    axios.get('http://localhost:3000/api/comments')
+    axios.get('http://localhost:5259/api/Comentarios/obtener-comentarios/{idPublicacion}')
       .then(({ data }) => {
         setComments(data);
       })
@@ -27,7 +27,7 @@ const CommentList: React.FC = () => {
 
   const handleDelete = (id: number) => {
     // Delete comment from backend
-    axios.delete(`http://localhost:3000/api/comments/${id}`)
+    axios.delete('http://localhost:3000/api/comments/${id}')
       .then(() => {
         setComments(comments.filter(comment => comment.id !== id));
         setSelectedComment(null);

@@ -1,30 +1,46 @@
 import React, { useState } from 'react';
 import computador from './assets/computador.jpeg';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'; // Importar SweetAlert2
 
 function Login() {
-  // Declaración del estado para email y password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Crear el hook de navegación
+  const navigate = useNavigate();
 
-
-  // Función para manejar el envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-    const response = await fetch('http://localhost:5259/api/Acceso/Login', { 
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ correo: email, claveHash: password }),
-    });
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5259/api/Acceso/Login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correo: email, claveHash: password }),
+      });
 
-    const data = await response.json();
-    if (data.isSucces) {
-      localStorage.setItem('token', data.token); // Guardar el token
-      alert('Inicio de sesión exitoso');
-      navigate('../Tipos_Desarrollo')
-    } else {
-      alert('Correo o contraseña incorrectos');
+      const data = await response.json();
+      if (data.isSucces) {
+        localStorage.setItem('token', data.token);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Inicio de sesión exitoso!',
+          text: 'Redirigiéndote a la página principal...',
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        navigate('../Tipos_Desarrollo');
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Correo o contraseña incorrectos',
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de conexión',
+        text: 'No se pudo conectar con el servidor',
+      });
     }
   };
 
@@ -36,26 +52,30 @@ function Login() {
           <div className="text-left text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-500 to-green-400">
             DevOpinion
           </div>
-          <form onSubmit={handleSubmit}> {/* Conectamos handleSubmit al evento onSubmit */}
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mt-1 block w-full p-2 border-b border-gray-400 focus:outline-none focus:border-green-600"
               />
             </div>
             <div className="mb-6">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)} 
+                onChange={(e) => setPassword(e.target.value)}
                 className="mt-1 block w-full p-2 border-b border-gray-400 focus:outline-none focus:border-green-600"
               />
             </div>
@@ -84,4 +104,3 @@ function Login() {
 }
 
 export default Login;
-
