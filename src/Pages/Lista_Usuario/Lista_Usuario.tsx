@@ -19,18 +19,18 @@ const UserList: React.FC = () => {
 
   useEffect(() => {
     // Fetch users from backend
-    axios.get('http://localhost:3000/api/users')
+    axios.get('http://localhost:5259/api/CRUD/listaUsuarios')
       .then(({ data }) => {
         setUsers(data);
       })
       .catch(error => {
-        console.error('There was an error fetching the users!', error);
+        console.error('Hubo un error al buscar a los usuarios!', error);
       });
   }, []);
 
   const handleDelete = (id: number) => {
     // Delete user from backend
-    axios.delete(`http://localhost:3000/api/users/${id}`)
+    axios.delete(`http://localhost:5259/api/CRUD/eliminarUsuario/${id}`)
       .then(() => {
         setUsers(users.filter(user => user.id !== id));
       })
@@ -46,7 +46,7 @@ const UserList: React.FC = () => {
   const handleSave = () => {
     if (editingUser) {
       // Update user in backend
-      axios.put(`http://localhost:5259/api/CRUD/${editingUser.id}`, editingUser)
+      axios.put(`http://localhost:5259/api/CRUD/editarUsuario/${editingUser.id}`, editingUser)    
         .then(() => {
           setUsers(users.map(user => (user.id === editingUser.id ? editingUser : user)));
           setEditingUser(null);
@@ -56,7 +56,7 @@ const UserList: React.FC = () => {
         });
     } else {
       // Create new user in backend
-      axios.post('http://localhost:3000/api/users', newUser)
+      axios.post('http://localhost:5259/api/CRUD/nuevoUsuario/', newUser)
         .then(({ data }) => {
           setUsers([...users, data]);
           setNewUser({ nombre: '', correo: '', contrasena: '', rol: ''});
@@ -170,7 +170,7 @@ const UserList: React.FC = () => {
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   />
                 </div>
-                                <div className="mb-4">
+                  <div className="mb-4">
                   <label htmlFor="rol" className="block text-sm font-medium text-gray-700">Rol</label>
                   <select
                     id="rol"
@@ -184,6 +184,7 @@ const UserList: React.FC = () => {
                     <option value="" disabled>Escoger un rol</option>
                     <option value="Administrador">Administrador</option>
                     <option value="Moderador">Moderador</option>
+                    <option value="User">Usuario</option>
                   </select>
                 </div>
 
