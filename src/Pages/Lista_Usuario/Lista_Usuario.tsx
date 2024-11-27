@@ -35,7 +35,7 @@ const UserList: React.FC = () => {
         setUsers(users.filter(user => user.id !== id));
       })
       .catch(error => {
-        console.error('There was an error deleting the user!', error);
+        console.error('¡Hubo un error al eliminar el usuario!', error);
       });
   };
 
@@ -52,7 +52,7 @@ const UserList: React.FC = () => {
           setEditingUser(null);
         })
         .catch(error => {
-          console.error('There was an error updating the user!', error);
+          console.error('¡Hubo un error al actualizar el usuario!', error);
         });
     } else {
       // Create new user in backend
@@ -62,7 +62,7 @@ const UserList: React.FC = () => {
           setNewUser({ nombre: '', correo: '', contrasena: '', rol: ''});
         })
         .catch(error => {
-          console.error('There was an error creating the user!', error);
+          console.error('¡Hubo un error al crear el usuario!', error);
         });
     }
   };

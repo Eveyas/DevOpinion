@@ -21,19 +21,19 @@ const CommentList: React.FC = () => {
         setComments(data);
       })
       .catch(error => {
-        console.error('There was an error fetching the comments!', error);
+        console.error('¡Hubo un error al recuperar los comentarios!', error);
       });
   }, []);
 
   const handleDelete = (id: number) => {
     // Delete comment from backend
-    axios.delete('http://localhost:3000/api/comments/${id}')
+    axios.delete('http://localhost:5259/api/Comentarios/eliminar-comentario/{idComentario}')
       .then(() => {
         setComments(comments.filter(comment => comment.id !== id));
         setSelectedComment(null);
       })
       .catch(error => {
-        console.error('There was an error deleting the comment!', error);
+        console.error('¡Hubo un error al eliminar el comentario!', error);
       });
   };
 
