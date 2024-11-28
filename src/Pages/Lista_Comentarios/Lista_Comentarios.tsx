@@ -32,7 +32,7 @@ const CommentList: React.FC = () => {
         }
       })
       .catch(error => {
-        console.error('There was an error fetching the comments!', error);
+        console.error('¡Hubo un error al recuperar los comentarios!', error);
       });
   }, []);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import axios from 'axios';
 import { FaEdit, FaTrash, FaUser, FaComment } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
@@ -13,11 +13,18 @@ interface User {
 }
 
 const UserList: React.FC = () => {
+  const [loggedInUser, setLoggedInUser] = useState<User | null>(null); // Cambio a User | null para mayor seguridad en tipo
   const [users, setUsers] = useState<User[]>([]);
   const [newUser, setNewUser] = useState({ nombre: '', correo: '', claveHash: '', rol: '' });
   const [editingUser, setEditingUser] = useState<User | null>(null);
 
   useEffect(() => {
+    // Cargar datos del usuario logueado
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+      setLoggedInUser(JSON.parse(storedUser));
+    }
+
     // Fetch users from backend
     axios.get('http://localhost:5259/api/CRUD/listaUsuarios')
       .then(({ data }) => {
@@ -30,12 +37,12 @@ const UserList: React.FC = () => {
 
   const handleDelete = (id: number) => {
     // Delete user from backend
-    axios.delete(`http://localhost:5259/api/CRUD/eliminarUsuario/${id}`)
+    axios.delete('http://localhost:5259/api/CRUD/eliminarUsuario/${id}')
       .then(() => {
         setUsers(users.filter(user => user.idUsuario !== id));
       })
       .catch(error => {
-        console.error('There was an error deleting the user!', error);
+        console.error('¡Hubo un error al eliminar el usuario!', error);
       });
   };
 
@@ -108,8 +115,9 @@ const UserList: React.FC = () => {
                 <div className="flex items-center">
                   <img src="https://via.placeholder.com/50" alt="Perfil" className="rounded-full w-10 h-10 mr-2" />
                   <div>
-                    <p className="font-semibold">Evelin Yasmin</p>
-                    <p className="text-sm text-gray-600">Administrador</p>
+                    {/* Usando loggedInUser para mostrar el nombre y rol */}
+                    <p className="font-semibold">{loggedInUser ? loggedInUser.nombre : 'Cargando...'}</p>
+                    <p className="text-sm text-gray-600">{loggedInUser ? loggedInUser.rol : 'Cargando...'}</p>
                   </div>
                 </div>
               </div>
@@ -182,21 +190,24 @@ const UserList: React.FC = () => {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="rol" className="block text-sm font-medium text-gray-700">Rol</label>
-                  <select
+                  <input
+                    type="text"
                     id="rol"
                     value={editingUser ? editingUser.rol : newUser.rol}
                     onChange={e => editingUser ? setEditingUser({ ...editingUser, rol: e.target.value }) : setNewUser({ ...newUser, rol: e.target.value })}
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   >
-                    <option value="admin">Administrador</option>
-                    <option value="user">Usuario</option>
+                    <option value="" disabled>Escoger un rol</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Moderador">Moderador</option>
+                    <option value="User">Usuario</option>
                   </select>
                 </div>
-                <div className="flex justify-end">
-                  <button type="button" onClick={handleSave} className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">
-                    {editingUser ? 'Guardar' : 'Crear'}
-                  </button>
-                </div>
+
+
+                <button type="button" onClick={handleSave} disabled={!newUser.rol && !editingUser?.rol} className="bg-green-500 text-white px-4 py-2 rounded">
+                  {editingUser ? 'Actualizar' : 'Guardar'}
+                </button>
               </form>
             </div>
           </div>
