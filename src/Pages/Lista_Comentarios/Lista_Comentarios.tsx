@@ -1,44 +1,108 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2'; // Importa SweetAlert2
 import { FaEdit, FaTrash, FaUsers, FaCommentDots } from 'react-icons/fa';
 import { CiLogout } from "react-icons/ci";
 import Footer from '../../Components/Footer';
 
 interface Comment {
-  id: number;
-  usuario: string;
+  idComentario: number;
+  idPublicacion: number;
   comentario: string;
+  fechaComentario: string;
+  usuario: {
+    idUsuario: number;
+    nombre: string;
+  };
 }
 
 const CommentList: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
+  const [editedComment, setEditedComment] = useState<string>("");
 
   useEffect(() => {
-    // Fetch comments from backend
-    axios.get('http://localhost:5259/api/Comentarios/obtener-comentarios/{idPublicacion}')
+    // Fetch all comments from backend
+    axios.get('http://localhost:5259/api/Comentarios/obtener-todos-comentarios')
       .then(({ data }) => {
-        setComments(data);
+        if (Array.isArray(data)) {
+          setComments(data);
+        } else {
+          console.error('Unexpected response format:', data);
+        }
       })
       .catch(error => {
-        console.error('There was an error fetching the comments!', error);
+        console.error('¡Hubo un error al recuperar los comentarios!', error);
       });
   }, []);
 
-  const handleDelete = (id: number) => {
-    // Delete comment from backend
-    axios.delete('http://localhost:3000/api/comments/${id}')
-      .then(() => {
-        setComments(comments.filter(comment => comment.id !== id));
-        setSelectedComment(null);
-      })
-      .catch(error => {
-        console.error('There was an error deleting the comment!', error);
-      });
+  const handleDelete = (idComentario: number) => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará el comentario de forma permanente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:5259/api/Comentarios/eliminar-comentario/${idComentario}`)
+          .then(() => {
+            Swal.fire(
+              'Eliminado',
+              'El comentario ha sido eliminado exitosamente.',
+              'success'
+            );
+            setComments(comments.filter(comment => comment.idComentario !== idComentario));
+            setSelectedComment(null);
+          })
+          .catch(error => {
+            Swal.fire(
+              'Error',
+              'Hubo un problema al eliminar el comentario.',
+              'error'
+            );
+            console.error('There was an error deleting the comment!', error);
+          });
+      }
+    });
   };
 
   const handleSelect = (comment: Comment) => {
     setSelectedComment(comment);
+    setEditedComment(comment.comentario); // Pre-fill with the existing comment
+  };
+
+  const handleEditSubmit = () => {
+    if (!selectedComment) return;
+
+    axios.put(`http://localhost:5259/api/Comentarios/actualizar-comentario/${selectedComment.idComentario}`, {
+      comentario: editedComment,
+    })
+      .then(() => {
+        setComments(comments.map(comment =>
+          comment.idComentario === selectedComment.idComentario
+            ? { ...comment, comentario: editedComment }
+            : comment
+        ));
+        setSelectedComment(null); // Clear the selection
+        setEditedComment(""); // Reset the edited comment
+        Swal.fire(
+          'Actualizado',
+          'El comentario ha sido actualizado exitosamente.',
+          'success'
+        );
+      })
+      .catch(error => {
+        Swal.fire(
+          'Error',
+          'Hubo un problema al actualizar el comentario.',
+          'error'
+        );
+        console.error('There was an error updating the comment!', error);
+      });
   };
 
   return (
@@ -66,7 +130,7 @@ const CommentList: React.FC = () => {
                     <span>Comentarios</span>
                   </a>
                   <a href="Login" className="flex items-center p-2 text-blue-500 hover:bg-green-100 rounded">
-                     <CiLogout className="mr-2" /> Cerrar sesión
+                    <CiLogout className="mr-2" /> Cerrar sesión
                   </a>
                 </li>
               </ul>
@@ -76,39 +140,29 @@ const CommentList: React.FC = () => {
         <main className="flex-grow p-6 bg-gray-100">
           <div className="max-w-7xl mx-auto">
             <div className="bg-white p-6 shadow-lg rounded-lg mb-6">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
-                </div>
-                <div className="flex items-center">
-                  <img src="https://via.placeholder.com/50" alt="Perfil" className="rounded-full w-10 h-10 mr-2" />
-                  <div>
-                    <p className="font-semibold">Evelin Yasmin</p>
-                    <p className="text-sm text-gray-600">Moderador</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 shadow-lg rounded-lg mb-6">
               <h2 className="text-2xl font-bold mb-4">Lista de Comentarios</h2>
               <table className="min-w-full bg-white shadow rounded-lg mb-6">
                 <thead>
                   <tr>
                     <th className="py-3 px-4 border-b">ID</th>
                     <th className="py-3 px-4 border-b">Usuario</th>
+                    <th className="py-3 px-4 border-b">Comentario</th>
+                    <th className="py-3 px-4 border-b">Fecha</th>
                     <th className="py-3 px-4 border-b">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   {comments.map(comment => (
-                    <tr key={comment.id}>
-                      <td className="py-2 px-4 border-b">{comment.id}</td>
-                      <td className="py-2 px-4 border-b">{comment.usuario}</td>
+                    <tr key={comment.idComentario}>
+                      <td className="py-2 px-4 border-b">{comment.idComentario}</td>
+                      <td className="py-2 px-4 border-b">{comment.usuario.nombre}</td>
+                      <td className="py-2 px-4 border-b">{comment.comentario}</td>
+                      <td className="py-2 px-4 border-b">{new Date(comment.fechaComentario).toLocaleString()}</td>
                       <td className="py-2 px-4 border-b">
                         <button onClick={() => handleSelect(comment)} className="text-blue-500 hover:text-blue-700 mr-2">
                           Editar <FaEdit />
                         </button>
-                        <button onClick={() => handleDelete(comment.id)} className="text-red-500 hover:text-red-700">
+                        <button onClick={() => handleDelete(comment.idComentario)} className="text-red-500 hover:text-red-700">
                           Eliminar <FaTrash />
                         </button>
                       </td>
@@ -119,10 +173,18 @@ const CommentList: React.FC = () => {
 
               {selectedComment && (
                 <div className="bg-white p-6 shadow-lg rounded-lg">
-                  <h3 className="text-xl font-bold mb-4">Usuario</h3>
-                  <p className="mb-2"><span className="font-semibold">Nombre:</span> {selectedComment.usuario}</p>
-                  <p className="mb-4"><span className="font-semibold">Comentario:</span> {selectedComment.comentario}</p>
-                  <button onClick={() => handleDelete(selectedComment.id)} className="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
+                  <h3 className="text-xl font-bold mb-4">Editar Comentario</h3>
+                  <textarea
+                    value={editedComment}
+                    onChange={(e) => setEditedComment(e.target.value)}
+                    className="w-full border rounded p-2 mb-4"
+                  />
+                  <button onClick={handleEditSubmit} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                    Guardar Cambios
+                  </button>
+                  <button onClick={() => setSelectedComment(null)} className="bg-gray-300 text-black px-4 py-2 rounded">
+                    Cancelar
+                  </button>
                 </div>
               )}
             </div>

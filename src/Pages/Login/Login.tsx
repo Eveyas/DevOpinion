@@ -19,7 +19,7 @@ function Login() {
 
       const data = await response.json();
       if (data.isSucces) {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('loggedInUser', JSON.stringify(data.usuario)); // Guardar usuario
         Swal.fire({
           icon: 'success',
           title: '¡Inicio de sesión exitoso!',

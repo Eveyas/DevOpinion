@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import Swal from 'sweetalert2';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import perfil from '../Perfil_Usuario/assets/Perfil.png';
 
 const Comentar = () => {
-  const [selectedTechnology, setSelectedTechnology] = useState('Backend');
-  const [selectedLevel, setSelectedLevel] = useState('Medio');
   const [image, setImage] = useState<File & { preview: string } | null>(null);
-  const [comment, setComment] = useState('');
-  const [technologyName, setTechnologyName] = useState('');
+  const [title, setTitle] = useState(''); // Para el título de la publicación
 
   const onDrop = (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -23,19 +21,57 @@ const Comentar = () => {
     },
     maxFiles: 1,
   });
+
   const handleRemoveImage = () => {
     setImage(null);
   };
-  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value);
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
   };
-  const handleTechnologyNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTechnologyName(e.target.value);
-  };
-  const handleInputResize = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    const target = e.target as HTMLTextAreaElement;
-    target.style.height = 'auto';
-    target.style.height = `${target.scrollHeight}px`;
+
+  const handleSubmit = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert('No estás autenticado. Por favor, inicia sesión.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('Titulo', title); // Asegúrate de enviar 'Titulo' tal como espera el backend
+    if (image) formData.append('Archivo', image); // Asegúrate de enviar 'Archivo' para la imagen
+
+    try {
+      const response = await fetch('http://localhost:5259/api/Publicaciones/publicar', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Publicación exitosa',
+          text: 'Tu publicación se realizó correctamente.',
+        });
+      } else {
+        const errorData = await response.json();
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorData.mensaje || 'Hubo un problema al publicar la imagen.',
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de conexión',
+        text: 'No se pudo conectar con el servidor',
+      });
+    }
   };
 
   return (
@@ -79,80 +115,26 @@ const Comentar = () => {
                 <p className="text-gray-600">{isDragActive ? 'Suelta la imagen aquí...' : 'Arrastra una imagen aquí o haz clic para subir'}</p>
               )}
             </div>
-            {image && (
-              <div className="text-center text-gray-600 mt-4">
-                <p>Arrastra una imagen aquí o haz clic para subir</p>
-              </div>
-            )}
           </div>
 
-          {/* Comentario */}
+          {/* Título */}
           <div className="bg-white shadow rounded-lg p-5 mb-6">
-            <h3 className="text-lg font-semibold mb-3">Comentario</h3>
-            <textarea
-              value={comment}
-              onChange={handleCommentChange}
-              onInput={handleInputResize} // Llamada a la función de ajuste de altura
-              className="w-full p-2 border border-gray-300 rounded-lg resize-none"
-              placeholder="Escribe tu comentario"
-              style={{ minHeight: '100px' }}
-            />
-          </div>
-
-          {/* Tecnología y Nivel */}
-          <div className="flex flex-col md:flex-row bg-white p-5 rounded-lg shadow mb-6">
-            <div className="w-full md:w-1/2 mb-4 md:mb-0">
-              <h4 className="font-semibold mb-2">Tecnología</h4>
-              <div className="space-y-4">
-                {['Frontend', 'Backend', 'Full stack'].map((tech) => (
-                  <div key={tech} className="flex items-center">
-                    <input
-                      type="radio"
-                      id={`tech-${tech}`}
-                      name="technology"
-                      value={tech}
-                      checked={selectedTechnology === tech}
-                      onChange={() => setSelectedTechnology(tech)}
-                      className="mr-2"
-                    />
-                    <label htmlFor={`tech-${tech}`}>{tech}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="w-full md:w-1/2">
-              <h4 className="font-semibold mb-2">Nivel</h4>
-              <div className="space-y-4">
-                {['Básico', 'Medio', 'Avanzado'].map((level) => (
-                  <div key={level} className="flex items-center">
-                    <input
-                      type="radio"
-                      id={`level-${level}`}
-                      name="level"
-                      value={level}
-                      checked={selectedLevel === level}
-                      onChange={() => setSelectedLevel(level)}
-                      className="mr-2"
-                    />
-                    <label htmlFor={`level-${level}`}>{level}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Nombre de la Tecnología */}
-          <div className="bg-white shadow rounded-lg p-5 mb-6">
-            <h4 className="font-semibold mb-2">Nombre de la Tecnología</h4>
+            <h3 className="text-lg font-semibold mb-3">Título de la publicación</h3>
             <input
               type="text"
-              value={technologyName}
-              onChange={handleTechnologyNameChange}
+              value={title}
+              onChange={handleTitleChange}
               className="w-full p-2 border border-gray-300 rounded-lg"
-              placeholder="Escribe el nombre de la tecnología"
+              placeholder="Escribe el título de tu publicación"
             />
-            <button className="bg-green-500 text-white px-4 py-2 rounded mt-4">Enviar</button>
           </div>
+
+          <button
+            onClick={handleSubmit}
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
+          >
+            Publicar
+          </button>
         </div>
       </main>
       <Footer />
