@@ -43,17 +43,29 @@ const Header: React.FC = () => {
             Comentar
           </Link>
           <Link
-            to="/Login"
+            to="/Lista_Usuario"
             className="block px-4 py-2 text-black hover:underline"
+          >
+            Usuarios
+          </Link>
+          <Link
+            to="/Perfil_Usuario"
+            className="block px-4 py-2 text-black hover:underline"
+          >
+            Perfil
+          </Link>
+          <Link
+            to="/Login"
+            className="block px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
           >
             Iniciar sesión
           </Link>
-          <Link
+          {/* <Link
             to="/Registro"
             className="block px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
           >
             Registrarse
-          </Link>
+          </Link> */}
         </nav>
 
         {/* Hamburguesa */}
