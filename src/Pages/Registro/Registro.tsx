@@ -12,7 +12,7 @@ function Registro() {
       const response = await fetch('http://localhost:5259/api/Acceso/Registrarse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, correo: email, claveHash: password }),
+        body: JSON.stringify({ nombre: nombre, correo: email, claveHash: password }),
       });
 
       const data = await response.json();

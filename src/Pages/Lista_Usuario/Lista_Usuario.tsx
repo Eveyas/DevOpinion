@@ -5,20 +5,19 @@ import { CiLogout } from "react-icons/ci";
 import Footer from '../../Components/Footer';
 
 interface User {
-  id: number;
+  idUsuario: number;
   nombre: string;
   correo: string;
-  contrasena: string;
+  claveHash: string;
   rol: string;
 }
 
 const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [newUser, setNewUser] = useState({ nombre: '', correo: '', contrasena: '', rol: '' });
   const [editingUser, setEditingUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // Fetch users from backend
+    // Lista de usuarios en backend
     axios.get('http://localhost:5259/api/CRUD/listaUsuarios')
       .then(({ data }) => {
         setUsers(data);
@@ -29,40 +28,30 @@ const UserList: React.FC = () => {
   }, []);
 
   const handleDelete = (id: number) => {
-    // Delete user from backend
+    // Eliminar usuario en backend
     axios.delete(`http://localhost:5259/api/CRUD/eliminarUsuario/${id}`)
       .then(() => {
-        setUsers(users.filter(user => user.id !== id));
+        setUsers(users.filter(user => user.idUsuario !== id));
       })
       .catch(error => {
-        console.error('There was an error deleting the user!', error);
+        console.error('Hubo un error al eliminar al usuario!', error);
       });
-  };
-
-  const handleEdit = (user: User) => {
-    setEditingUser(user);
   };
 
   const handleSave = () => {
     if (editingUser) {
-      // Update user in backend
-      axios.put(`http://localhost:5259/api/CRUD/editarUsuario/${editingUser.id}`, editingUser)    
+      // Actualizar usuario en backend
+      axios.put(`http://localhost:5259/api/CRUD/editarUsuario/${editingUser.idUsuario}`, {
+        Nombre: editingUser.nombre,
+        Correo: editingUser.correo,
+        IdRol: parseInt(editingUser.rol)
+      })
         .then(() => {
-          setUsers(users.map(user => (user.id === editingUser.id ? editingUser : user)));
+          setUsers(users.map(user => (user.idUsuario === editingUser.idUsuario ? editingUser : user)));
           setEditingUser(null);
         })
         .catch(error => {
-          console.error('There was an error updating the user!', error);
-        });
-    } else {
-      // Create new user in backend
-      axios.post('http://localhost:5259/api/CRUD/nuevoUsuario/', newUser)
-        .then(({ data }) => {
-          setUsers([...users, data]);
-          setNewUser({ nombre: '', correo: '', contrasena: '', rol: ''});
-        })
-        .catch(error => {
-          console.error('There was an error creating the user!', error);
+          console.error('Hubo un error al actualizar el usuario!', error);
         });
     }
   };
@@ -72,12 +61,11 @@ const UserList: React.FC = () => {
       <div className="flex flex-grow">
         {/* Sidebar */}
         <aside className="w-64 bg-lightblue-200 p-4 shadow-lg">
-        <div className="flex items-center mb-8">
-              <img src="./src/assets/Imagenes/logo_white.png" alt="Logo" className="w-10 h-10" />
-              <span className="ml-2 text-xl font-bold text-blue-400">Dev</span><span className="text-xl font-bold text-green-400">Opinion</span>
-            </div>
+          <div className="flex items-center mb-8">
+            <img src="./src/assets/Imagenes/logo_white.png" alt="Logo" className="w-10 h-10" />
+            <span className="ml-2 text-xl font-bold text-blue-400">Dev</span><span className="text-xl font-bold text-green-400">Opinion</span>
+          </div>
           <nav className="space-y-4">
-            
             <a href="#" className="flex items-center p-2 bg-green-500 text-white rounded">
               <FaUser className="mr-2" /> Usuarios
             </a>
@@ -98,7 +86,7 @@ const UserList: React.FC = () => {
                 <div className="flex items-center">
                   <img src="https://via.placeholder.com/50" alt="Perfil" className="rounded-full w-10 h-10 mr-2" />
                   <div>
-                    <p className="font-semibold">Evelin Yasmin</p>
+                    <p className="font-semibold">Evelin</p>
                     <p className="text-sm text-gray-600">Administrador</p>
                   </div>
                 </div>
@@ -112,23 +100,23 @@ const UserList: React.FC = () => {
                   <th className="py-3 px-4 border-b">Nombre</th>
                   <th className="py-3 px-4 border-b">Correo</th>
                   <th className="py-3 px-4 border-b">Contraseña</th>
-                  <th className="py-3 px-4 border-b">Acciones</th>
                   <th className="py-3 px-4 border-b">Rol</th>
+                  <th className="py-3 px-4 border-b">Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map(user => (
-                  <tr key={user.id}>
-                    <td className="py-2 px-4 border-b">{user.id}</td>
+                  <tr key={user.idUsuario}>
+                    <td className="py-2 px-4 border-b">{user.idUsuario}</td>
                     <td className="py-2 px-4 border-b">{user.nombre}</td>
                     <td className="py-2 px-4 border-b">{user.correo}</td>
-                    <td className="py-2 px-4 border-b">{user.contrasena}</td>
+                    <td className="py-2 px-4 border-b">{user.claveHash}</td>
                     <td className="py-2 px-4 border-b">{user.rol}</td>
                     <td className="py-2 px-4 border-b">
-                      <button onClick={() => handleEdit(user)} className="text-blue-500 hover:text-blue-700 mr-2">
+                      <button onClick={() => setEditingUser(user)} className="text-blue-500 hover:text-blue-700 mr-2">
                         Editar<FaEdit />
                       </button>
-                      <button onClick={() => handleDelete(user.id)} className="text-red-500 hover:text-red-700">
+                      <button onClick={() => handleDelete(user.idUsuario)} className="text-red-500 hover:text-red-700">
                         Eliminar<FaTrash />
                       </button>
                     </td>
@@ -137,63 +125,47 @@ const UserList: React.FC = () => {
               </tbody>
             </table>
 
-            <div className="mt-6">
-              <h2 className="text-xl font-semibold mb-4">{editingUser ? 'Editar Usuario' : 'Nuevo Usuario'}</h2>
-              <form className="bg-white p-4 shadow rounded-lg">
-                <div className="mb-4">
-                  <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre</label>
-                  <input
-                    type="text"
-                    id="nombre"
-                    value={editingUser ? editingUser.nombre : newUser.nombre}
-                    onChange={e => editingUser ? setEditingUser({ ...editingUser, nombre: e.target.value }) : setNewUser({ ...newUser, nombre: e.target.value })}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="correo" className="block text-sm font-medium text-gray-700">Correo</label>
-                  <input
-                    type="email"
-                    id="correo"
-                    value={editingUser ? editingUser.correo : newUser.correo}
-                    onChange={e => editingUser ? setEditingUser({ ...editingUser, correo: e.target.value }) : setNewUser({ ...newUser, correo: e.target.value })}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="contrasena" className="block text-sm font-medium text-gray-700">Contraseña</label>
-                  <input
-                    type="password"
-                    id="contrasena"
-                    value={editingUser ? editingUser.contrasena : newUser.contrasena}
-                    onChange={e => editingUser ? setEditingUser({ ...editingUser, contrasena: e.target.value }) : setNewUser({ ...newUser, contrasena: e.target.value })}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                  />
-                </div>
+            {editingUser && (
+              <div className="mt-6">
+                <h2 className="text-xl font-semibold mb-4">Editar Usuario</h2>
+                <form className="bg-white p-4 shadow rounded-lg">
                   <div className="mb-4">
-                  <label htmlFor="rol" className="block text-sm font-medium text-gray-700">Rol</label>
-                  <select
-                    id="rol"
-                    value={editingUser ? editingUser.rol : newUser.rol}
-                    onChange={(e) => editingUser
-                      ? setEditingUser({ ...editingUser, rol: e.target.value })
-                      : setNewUser({ ...newUser, rol: e.target.value })
-                    }
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                  >
-                    <option value="" disabled>Escoger un rol</option>
-                    <option value="Administrador">Administrador</option>
-                    <option value="Moderador">Moderador</option>
-                    <option value="User">Usuario</option>
-                  </select>
-                </div>
-
-
-                <button type="button" onClick={handleSave} disabled={!newUser.rol && !editingUser?.rol} className="bg-green-500 text-white px-4 py-2 rounded">
-                  {editingUser ? 'Actualizar' : 'Guardar'}
-                </button>
-              </form>
-            </div>
+                    <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input
+                      type="text"
+                      id="nombre"
+                      value={editingUser.nombre}
+                      onChange={e => setEditingUser({ ...editingUser, nombre: e.target.value })}
+                      className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="correo" className="block text-sm font-medium text-gray-700">Correo</label>
+                    <input
+                      type="email"
+                      id="correo"
+                      value={editingUser.correo}
+                      onChange={e => setEditingUser({ ...editingUser, correo: e.target.value })}
+                      className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div className='mb-4'>
+                    <label htmlFor="rol" className="block text-sm font-medium text-gray-700">Rol</label>              
+                    <input
+                      type="number"
+                      value={editingUser.rol}
+                      onChange={e => setEditingUser({ ...editingUser, rol: e.target.value })}
+                      className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div className="flex justify-end">
+                    <button type="button" onClick={handleSave} className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">
+                      Guardar
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
           </div>
         </main>
       </div>

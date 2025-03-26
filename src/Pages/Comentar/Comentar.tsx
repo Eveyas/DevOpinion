@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import Swal from 'sweetalert2';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import perfil from '../Perfil_Usuario/assets/Perfil.png';
 
 const Comentar = () => {
-  const [selectedTechnology, setSelectedTechnology] = useState('Backend');
-  const [selectedLevel, setSelectedLevel] = useState('Medio');
+  // Estados
   const [image, setImage] = useState<File & { preview: string } | null>(null);
+  const [title, setTitle] = useState('');
   const [comment, setComment] = useState('');
   const [technologyName, setTechnologyName] = useState('');
+  const [selectedTechnology, setSelectedTechnology] = useState('Backend');
+  const [selectedLevel, setSelectedLevel] = useState('Medio');
 
+  // Manejo de imagenes
   const onDrop = (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     setImage(Object.assign(file, { preview: URL.createObjectURL(file) }));
@@ -18,24 +22,87 @@ const Comentar = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif']
-    },
+    accept: { 'image/*': ['.jpeg', '.jpg', '.png', '.gif'] },
     maxFiles: 1,
   });
+
   const handleRemoveImage = () => {
     setImage(null);
   };
-  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(e.target.value);
-  };
-  const handleTechnologyNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  // Manejo de eventos
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value);
+  const handleTechnologyNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setTechnologyName(e.target.value);
-  };
+
   const handleInputResize = (e: React.FormEvent<HTMLTextAreaElement>) => {
     const target = e.target as HTMLTextAreaElement;
     target.style.height = 'auto';
     target.style.height = `${target.scrollHeight}px`;
+  };
+
+  // Envío de datos
+  const handleSubmit = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert('No estás autenticado. Por favor, inicia sesión.');
+      return;
+    }
+
+    if (!title || !comment || !technologyName) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Faltan campos',
+        text: 'Por favor, completa todos los campos antes de enviar.',
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('Titulo', title);
+    formData.append('Comentario', comment);
+    formData.append('Tecnologia', selectedTechnology);
+    formData.append('Nivel', selectedLevel);
+    formData.append('NombreTecnologia', technologyName);
+    if (image) formData.append('Archivo', image);
+
+    try {
+      const response = await fetch('http://localhost:5259/api/Publicaciones/publicar', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Publicación exitosa',
+          text: 'Tu publicación se realizó correctamente.',
+        });
+        // Limpiar campos
+        setImage(null);
+        setTitle('');
+        setComment('');
+        setTechnologyName('');
+      } else {
+        const errorData = await response.json();
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorData.mensaje || 'Hubo un problema al publicar la información.',
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de conexión',
+        text: 'No se pudo conectar con el servidor.',
+      });
+    }
   };
 
   return (
@@ -50,7 +117,7 @@ const Comentar = () => {
             </div>
           </header>
 
-          {/* Contenido Principal */}
+          {/* Imagen */}
           <div className="bg-white shadow rounded-lg p-5 mb-6">
             <h2 className="text-lg font-semibold mb-3">Imagen referente</h2>
             <div
@@ -67,7 +134,6 @@ const Comentar = () => {
                     alt="Imagen subida"
                     className="max-w-32 max-h-32 object-contain"
                   />
-                  {/* Eliminar la imagen */}
                   <button
                     onClick={handleRemoveImage}
                     className="absolute top-2 right-2 text-white bg-blue-400 rounded-full p-1 text-sm"
@@ -79,11 +145,18 @@ const Comentar = () => {
                 <p className="text-gray-600">{isDragActive ? 'Suelta la imagen aquí...' : 'Arrastra una imagen aquí o haz clic para subir'}</p>
               )}
             </div>
-            {image && (
-              <div className="text-center text-gray-600 mt-4">
-                <p>Arrastra una imagen aquí o haz clic para subir</p>
-              </div>
-            )}
+          </div>
+
+          {/* Título */}
+          <div className="bg-white shadow rounded-lg p-5 mb-6">
+            <h3 className="text-lg font-semibold mb-3">Título de la publicación</h3>
+            <input
+              type="text"
+              value={title}
+              onChange={handleTitleChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              placeholder="Escribe el título de tu publicación"
+            />
           </div>
 
           {/* Comentario */}
@@ -92,7 +165,7 @@ const Comentar = () => {
             <textarea
               value={comment}
               onChange={handleCommentChange}
-              onInput={handleInputResize} // Llamada a la función de ajuste de altura
+              onInput={handleInputResize}
               className="w-full p-2 border border-gray-300 rounded-lg resize-none"
               placeholder="Escribe tu comentario"
               style={{ minHeight: '100px' }}
@@ -151,8 +224,14 @@ const Comentar = () => {
               className="w-full p-2 border border-gray-300 rounded-lg"
               placeholder="Escribe el nombre de la tecnología"
             />
-            <button className="bg-green-500 text-white px-4 py-2 rounded mt-4">Enviar</button>
           </div>
+
+          <button
+            onClick={handleSubmit}
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
+          >
+            Publicar
+          </button>
         </div>
       </main>
       <Footer />
